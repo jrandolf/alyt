@@ -1,8 +1,8 @@
 # alyt
 
-Pluggable analytics for TypeScript.
+All-in-one Analytics SDK.
 
-Send events to Google Analytics, PostHog, Mixpanel, Amplitude, Plausible, and Vercel Analytics through a single API. Add or remove providers at runtime for consent flows, and generate fully typed event trackers from a YAML schema.
+Define your analytics events in a YAML schema and get a fully typed TypeScript tracker — no more typos in event names or missing properties. alyt sends events to Google Analytics, PostHog, Mixpanel, Amplitude, Plausible, and Vercel Analytics through a single API, and lets you add or remove providers at runtime for consent flows.
 
 ## Install
 
