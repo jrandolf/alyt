@@ -1,0 +1,50 @@
+name: Release Notes
+
+on:
+  repository_dispatch:
+    types: [release-notes]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag (e.g. v0.1.0)
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  enhance:
+    name: Generate release notes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          allowed_tools: "Bash(git log),Bash(git describe),Read,Write"
+          prompt: |
+            Generate polished release notes for the tag ${{ inputs.tag || github.event.client_payload.tag }}.
+
+            Steps:
+            1. Run `git describe --tags --abbrev=0 HEAD^` to find the previous tag
+            2. Run `git log <previous-tag>..HEAD --oneline` to see all commits
+            3. Read the README.md to understand the project
+            4. Write release notes to `release-notes.md`
+
+            The release notes should:
+            - Start with an enthusiastic one-paragraph summary of the release
+            - Group changes into labeled sections:
+              - New Features
+              - Bug Fixes
+              - Improvements
+              - Breaking Changes (if any)
+            - Include code examples for new features where relevant
+            - Include an installation snippet: `npm install @alyt/core @alyt/plugin-ga`
+            - Be developer-friendly and concise
+      - name: Update GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.tag || github.event.client_payload.tag }}
+          body_path: release-notes.md

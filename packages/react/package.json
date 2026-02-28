@@ -1,0 +1,33 @@
+{
+  "name": "@alyt/react",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./build/index.js"
+  },
+  "scripts": {
+    "build": "tsc -b tsconfig.lib.json",
+    "test": "vitest run",
+    "typecheck": "tsc -b --noEmit"
+  },
+  "dependencies": {
+    "@alyt/core": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.3.2",
+    "@types/react": "19.2.14",
+    "jsdom": "^28.1.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "typescript": "5.9.3",
+    "vitest": "^4.0.18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jrandolf/alyt.git",
+    "directory": "packages/react"
+  }
+}

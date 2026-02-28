@@ -1,0 +1,29 @@
+{
+  "name": "@alyt/codegen",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./build/index.js"
+  },
+  "bin": {
+    "alyt-codegen": "./build/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -b tsconfig.lib.json",
+    "test": "vitest run",
+    "typecheck": "tsc -b --noEmit"
+  },
+  "dependencies": {
+    "yaml": "^2.8.2"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.2",
+    "typescript": "5.9.3",
+    "vitest": "^4.0.18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jrandolf/alyt.git",
+    "directory": "packages/codegen"
+  }
+}
