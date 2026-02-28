@@ -9,9 +9,9 @@
     "alyt-codegen": "./build/cli.js"
   },
   "scripts": {
-    "build": "tsc -b tsconfig.lib.json",
+    "build": "tsc -p tsconfig.lib.json",
     "test": "vitest run",
-    "typecheck": "tsc -b --noEmit"
+    "typecheck": "tsc -p tsconfig.lib.json --noEmit"
   },
   "dependencies": {
     "yaml": "^2.8.2"
