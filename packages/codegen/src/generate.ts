@@ -1,4 +1,5 @@
 export interface SchemaEvent {
+  description?: string;
   params?: Record<string, string>;
 }
 
@@ -28,6 +29,9 @@ export function generateTypes(schema: Schema): string {
   lines.push("");
   lines.push("export interface AnalyticsEventMap {");
   for (const [name, def] of Object.entries(schema.events)) {
+    if (def?.description) {
+      lines.push(`\t/** ${def.description} */`);
+    }
     const params = def?.params;
     if (params && Object.keys(params).length > 0) {
       const fields = Object.entries(params)
@@ -59,6 +63,9 @@ export function generateTracker(schema: Schema): string {
     const methodName = snakeToCamel(name);
     const params = def?.params;
 
+    if (def?.description) {
+      lines.push(`\t\t/** ${def.description} */`);
+    }
     if (params && Object.keys(params).length > 0) {
       const paramEntries = Object.entries(params);
       const args = paramEntries.map(([k, v]) => `${snakeToCamel(k)}: ${v}`).join(", ");
