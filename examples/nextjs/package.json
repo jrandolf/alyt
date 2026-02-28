@@ -1,0 +1,19 @@
+{
+  "name": "alyt-example-nextjs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "alyt-codegen --schema analytics.schema.yaml --out lib/generated"
+  },
+  "dependencies": {
+    "@alyt/core": "latest",
+    "@alyt/plugin-ga": "latest",
+    "@alyt/react": "latest",
+    "next": ">=14",
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@alyt/codegen": "latest"
+  }
+}
