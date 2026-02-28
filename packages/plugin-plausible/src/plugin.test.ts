@@ -41,4 +41,13 @@ describe("plausible", () => {
 
     vi.unstubAllGlobals();
   });
+
+  it("uses provided client instead of window global", () => {
+    const client = vi.fn();
+
+    const plugin = plausible({ domain: "example.com", client });
+    plugin.track("signup", { plan: "pro" });
+
+    expect(client).toHaveBeenCalledWith("signup", { props: { plan: "pro" } });
+  });
 });

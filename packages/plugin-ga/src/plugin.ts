@@ -1,37 +1,28 @@
 import type { AnalyticsPlugin } from "@alyt/core";
 
-type GtagCommand = "config" | "event" | "js" | "set";
-
-function gtag(...args: [GtagCommand, ...unknown[]]) {
-  if (typeof window !== "undefined" && typeof window.gtag === "function") {
-    window.gtag(...args);
-  }
-}
-
-declare global {
-  interface Window {
-    gtag?: (...args: [GtagCommand, ...unknown[]]) => void;
-  }
-}
-
 export interface GoogleAnalyticsOptions {
   measurementId: string;
+  client?: Gtag.Gtag;
 }
 
 export function googleAnalytics(options: GoogleAnalyticsOptions): AnalyticsPlugin {
+  function getGtag(): Gtag.Gtag | undefined {
+    return options.client ?? (typeof window !== "undefined" ? window.gtag : undefined);
+  }
+
   return {
     name: "google-analytics",
     track(event, params) {
-      gtag("event", event, params);
+      getGtag()?.("event", event, params);
     },
     identify(userId, traits) {
-      gtag("set", { user_id: userId, ...traits });
+      getGtag()?.("set", { user_id: userId, ...traits });
     },
     page(name, params) {
-      gtag("event", "page_view", { page_title: name, ...params });
+      getGtag()?.("event", "page_view", { page_title: name, ...params });
     },
     reset() {
-      gtag("set", { user_id: undefined });
+      getGtag()?.("set", { user_id: undefined });
     },
   };
 }

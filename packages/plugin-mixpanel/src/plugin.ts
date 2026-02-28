@@ -1,19 +1,16 @@
 import type { AnalyticsPlugin } from "@alyt/core";
+import type { OverridedMixpanel } from "mixpanel-browser";
 
 export interface MixpanelOptions {
   token: string;
+  client?: OverridedMixpanel;
 }
 
 export function mixpanel(options: MixpanelOptions): AnalyticsPlugin {
-  function getMixpanel() {
+  function getMixpanel(): OverridedMixpanel | null {
+    if (options.client) return options.client;
     if (typeof window !== "undefined" && "mixpanel" in window) {
-      return (window as Record<string, unknown>).mixpanel as {
-        track(event: string, params?: Record<string, unknown>): void;
-        identify(userId: string): void;
-        people: { set(traits: Record<string, unknown>): void };
-        track_pageview(params?: Record<string, unknown>): void;
-        reset(): void;
-      };
+      return (window as Record<string, unknown>).mixpanel as OverridedMixpanel;
     }
     return null;
   }

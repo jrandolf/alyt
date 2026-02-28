@@ -63,4 +63,21 @@ describe("amplitude", () => {
 
     vi.unstubAllGlobals();
   });
+
+  it("uses provided client instead of window global", () => {
+    const client = {
+      track: vi.fn(),
+      setUserId: vi.fn(),
+      reset: vi.fn(),
+    };
+
+    const plugin = amplitude({ apiKey: "test-key", client: client as never });
+    plugin.track("test_event", { key: "value" });
+    plugin.identify!("user-123");
+    plugin.reset!();
+
+    expect(client.track).toHaveBeenCalledWith("test_event", { key: "value" });
+    expect(client.setUserId).toHaveBeenCalledWith("user-123");
+    expect(client.reset).toHaveBeenCalled();
+  });
 });

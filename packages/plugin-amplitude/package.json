@@ -15,10 +15,14 @@
     "@alyt/core": "workspace:*"
   },
   "peerDependencies": {
+    "@amplitude/analytics-browser": ">=2",
     "next": ">=14",
     "react": ">=18"
   },
   "peerDependenciesMeta": {
+    "@amplitude/analytics-browser": {
+      "optional": true
+    },
     "next": {
       "optional": true
     },
@@ -27,6 +31,7 @@
     }
   },
   "devDependencies": {
+    "@amplitude/analytics-browser": "^2.35.4",
     "@types/react": "19.2.14",
     "next": "16.1.6",
     "react": "19.2.4",
