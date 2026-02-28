@@ -1,0 +1,41 @@
+{
+  "name": "@alyt/plugin-amplitude",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./build/index.js",
+    "./react": "./build/react/index.js"
+  },
+  "scripts": {
+    "build": "tsc -b tsconfig.lib.json",
+    "test": "vitest run",
+    "typecheck": "tsc -b --noEmit"
+  },
+  "dependencies": {
+    "@alyt/core": "workspace:*"
+  },
+  "peerDependencies": {
+    "next": ">=14",
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "next": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/react": "19.2.14",
+    "next": "16.1.6",
+    "react": "19.2.4",
+    "typescript": "5.9.3",
+    "vitest": "^4.0.18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jrandolf/alyt.git",
+    "directory": "packages/plugin-amplitude"
+  }
+}

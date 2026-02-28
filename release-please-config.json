@@ -1,0 +1,56 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "initial-version": "0.1.0",
+  "bump-minor-pre-major": true,
+  "bump-patch-for-minor-pre-major": true,
+  "packages": {
+    "packages/core": {
+      "release-type": "node"
+    },
+    "packages/react": {
+      "release-type": "node"
+    },
+    "packages/codegen": {
+      "release-type": "node"
+    },
+    "packages/plugin-ga": {
+      "release-type": "node"
+    },
+    "packages/plugin-posthog": {
+      "release-type": "node"
+    },
+    "packages/plugin-mixpanel": {
+      "release-type": "node"
+    },
+    "packages/plugin-amplitude": {
+      "release-type": "node"
+    },
+    "packages/plugin-plausible": {
+      "release-type": "node"
+    },
+    "packages/plugin-vercel": {
+      "release-type": "node"
+    }
+  },
+  "plugins": [
+    {
+      "type": "linked-versions",
+      "groupName": "alyt",
+      "components": [
+        "core",
+        "react",
+        "codegen",
+        "plugin-ga",
+        "plugin-posthog",
+        "plugin-mixpanel",
+        "plugin-amplitude",
+        "plugin-plausible",
+        "plugin-vercel"
+      ]
+    },
+    {
+      "type": "node-workspace",
+      "merge": false
+    }
+  ]
+}
