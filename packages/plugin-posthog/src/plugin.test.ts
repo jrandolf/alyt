@@ -54,4 +54,21 @@ describe("posthog", () => {
 
     vi.unstubAllGlobals();
   });
+
+  it("uses provided client instead of window global", () => {
+    const client = {
+      capture: vi.fn(),
+      identify: vi.fn(),
+      reset: vi.fn(),
+    };
+
+    const plugin = posthog({ apiKey: "phc_test", client: client as never });
+    plugin.track("test_event", { key: "value" });
+    plugin.identify!("user-123", { email: "a@b.com" });
+    plugin.reset!();
+
+    expect(client.capture).toHaveBeenCalledWith("test_event", { key: "value" });
+    expect(client.identify).toHaveBeenCalledWith("user-123", { email: "a@b.com" });
+    expect(client.reset).toHaveBeenCalled();
+  });
 });

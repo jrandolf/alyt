@@ -62,4 +62,24 @@ describe("mixpanel", () => {
 
     vi.unstubAllGlobals();
   });
+
+  it("uses provided client instead of window global", () => {
+    const client = {
+      track: vi.fn(),
+      identify: vi.fn(),
+      people: { set: vi.fn() },
+      track_pageview: vi.fn(),
+      reset: vi.fn(),
+    };
+
+    const plugin = mixpanel({ token: "test-token", client: client as never });
+    plugin.track("test_event", { key: "value" });
+    plugin.identify!("user-123", { email: "a@b.com" });
+    plugin.reset!();
+
+    expect(client.track).toHaveBeenCalledWith("test_event", { key: "value" });
+    expect(client.identify).toHaveBeenCalledWith("user-123");
+    expect(client.people.set).toHaveBeenCalledWith({ email: "a@b.com" });
+    expect(client.reset).toHaveBeenCalled();
+  });
 });
