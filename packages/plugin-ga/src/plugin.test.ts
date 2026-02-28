@@ -39,4 +39,15 @@ describe("googleAnalytics", () => {
 
     vi.unstubAllGlobals();
   });
+
+  it("uses provided client instead of window global", () => {
+    const client = vi.fn();
+
+    const plugin = googleAnalytics({ measurementId: "G-TEST", client: client as never });
+    plugin.track("test_event", { key: "value" });
+    plugin.identify!("user-123");
+
+    expect(client).toHaveBeenCalledWith("event", "test_event", { key: "value" });
+    expect(client).toHaveBeenCalledWith("set", { user_id: "user-123" });
+  });
 });
