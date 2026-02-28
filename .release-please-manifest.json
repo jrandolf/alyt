@@ -1,0 +1,11 @@
+{
+  "packages/core": "0.0.0",
+  "packages/react": "0.0.0",
+  "packages/codegen": "0.0.0",
+  "packages/plugin-ga": "0.0.0",
+  "packages/plugin-posthog": "0.0.0",
+  "packages/plugin-mixpanel": "0.0.0",
+  "packages/plugin-amplitude": "0.0.0",
+  "packages/plugin-plausible": "0.0.0",
+  "packages/plugin-vercel": "0.0.0"
+}
