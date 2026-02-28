@@ -1,0 +1,12 @@
+events:
+  page_viewed:
+    description: Fired when a user views a page
+    params:
+      page_name: string
+  button_clicked:
+    description: Fired when a user clicks a button
+    params:
+      button_id: string
+      label: string
+  user_signed_up:
+    description: Fired when a new user completes registration
