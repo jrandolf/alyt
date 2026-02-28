@@ -3,11 +3,20 @@
   "compilerOptions": {
     "outDir": "./build",
     "rootDir": "./src",
-    "lib": ["ES2022", "dom", "dom.iterable"],
+    "lib": [
+      "ES2022",
+      "dom",
+      "dom.iterable"
+    ],
     "jsx": "react-jsx",
     "strictNullChecks": true
   },
-  "include": ["src"],
-  "exclude": ["build", "**/*.test.ts", "**/*.test.tsx"],
-  "references": [{ "path": "../core/tsconfig.lib.json" }]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "build",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ]
 }
