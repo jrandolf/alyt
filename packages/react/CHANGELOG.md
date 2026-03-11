@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.1.2](https://github.com/mathematic-inc/alyt/compare/react-v0.1.1...react-v0.1.2) (2026-03-11)
+
+
+### Features
+
+* Initial commit ([890b266](https://github.com/mathematic-inc/alyt/commit/890b26639f1919dbb5a2a91851e76c6608ee751b))
+* Transfer repo to mathematic-inc, adopt Apache-2.0, and improve release pipeline ([#2](https://github.com/mathematic-inc/alyt/issues/2)) ([bd7a8be](https://github.com/mathematic-inc/alyt/commit/bd7a8be4e182d8e6a8296e76d5405c4e9146cb53))
+
+
+### Bug Fixes
+
+* Use turbo for build orchestration instead of tsc project references ([6f12295](https://github.com/mathematic-inc/alyt/commit/6f12295b3951818c6a502faf406e72bad9cf33cf))
+
 ## [0.1.1](https://github.com/mathematic-inc/alyt/compare/react-v0.1.0...react-v0.1.1) (2026-03-11)
 
 

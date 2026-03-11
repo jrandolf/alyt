@@ -1,6 +1,6 @@
 {
   "name": "@alyt/plugin-mixpanel",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Mixpanel plugin for alyt",
   "keywords": [
     "analytics",
