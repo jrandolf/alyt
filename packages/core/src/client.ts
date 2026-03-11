@@ -1,4 +1,8 @@
-import type { AnalyticsClient, AnalyticsOptions, AnalyticsPlugin, TrackOptions } from "./types.js";
+import type {
+  AnalyticsClient,
+  AnalyticsOptions,
+  AnalyticsPlugin,
+} from "./types.js";
 
 export function createAnalytics(options?: AnalyticsOptions): AnalyticsClient {
   const plugins: AnalyticsPlugin[] = [...(options?.plugins ?? [])];
@@ -6,7 +10,7 @@ export function createAnalytics(options?: AnalyticsOptions): AnalyticsClient {
   return {
     track(event, params, trackOptions) {
       const targets = trackOptions?.only
-        ? plugins.filter((p) => trackOptions.only!.includes(p.name))
+        ? plugins.filter((p) => trackOptions.only?.includes(p.name))
         : plugins;
       for (const p of targets) {
         p.track(event, params);

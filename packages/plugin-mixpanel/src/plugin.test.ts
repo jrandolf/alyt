@@ -29,7 +29,7 @@ describe("mixpanel", () => {
     });
 
     const plugin = mixpanel({ token: "test-token" });
-    plugin.identify!("user-123", { email: "a@b.com" });
+    plugin.identify?.("user-123", { email: "a@b.com" });
 
     expect(identifyMock).toHaveBeenCalledWith("user-123");
     expect(setMock).toHaveBeenCalledWith({ email: "a@b.com" });
@@ -44,7 +44,7 @@ describe("mixpanel", () => {
     });
 
     const plugin = mixpanel({ token: "test-token" });
-    plugin.page!("Home", { path: "/" });
+    plugin.page?.("Home", { path: "/" });
 
     expect(trackPageviewMock).toHaveBeenCalledWith({ page: "Home", path: "/" });
 
@@ -56,9 +56,9 @@ describe("mixpanel", () => {
 
     const plugin = mixpanel({ token: "test-token" });
     expect(() => plugin.track("event")).not.toThrow();
-    expect(() => plugin.identify!("user")).not.toThrow();
-    expect(() => plugin.page!("page")).not.toThrow();
-    expect(() => plugin.reset!()).not.toThrow();
+    expect(() => plugin.identify?.("user")).not.toThrow();
+    expect(() => plugin.page?.("page")).not.toThrow();
+    expect(() => plugin.reset?.()).not.toThrow();
 
     vi.unstubAllGlobals();
   });
@@ -74,8 +74,8 @@ describe("mixpanel", () => {
 
     const plugin = mixpanel({ token: "test-token", client: client as never });
     plugin.track("test_event", { key: "value" });
-    plugin.identify!("user-123", { email: "a@b.com" });
-    plugin.reset!();
+    plugin.identify?.("user-123", { email: "a@b.com" });
+    plugin.reset?.();
 
     expect(client.track).toHaveBeenCalledWith("test_event", { key: "value" });
     expect(client.identify).toHaveBeenCalledWith("user-123");

@@ -1,6 +1,14 @@
 {
   "name": "@alyt/plugin-plausible",
   "version": "0.1.0",
+  "description": "Plausible Analytics plugin for alyt",
+  "keywords": [
+    "analytics",
+    "plausible",
+    "typescript",
+    "plugin",
+    "event-tracking"
+  ],
   "type": "module",
   "exports": {
     ".": "./build/index.js",
@@ -26,6 +34,8 @@
       "optional": true
     }
   },
+  "author": "Mathematic Inc",
+  "license": "Apache-2.0",
   "devDependencies": {
     "@types/react": "19.2.14",
     "next": "16.1.6",
@@ -35,7 +45,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jrandolf/alyt.git",
+    "url": "https://github.com/mathematic-inc/alyt.git",
     "directory": "packages/plugin-plausible"
   }
 }

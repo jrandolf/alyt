@@ -14,7 +14,9 @@ describe("googleAnalytics", () => {
     const plugin = googleAnalytics({ measurementId: "G-TEST" });
     plugin.track("test_event", { key: "value" });
 
-    expect(gtagMock).toHaveBeenCalledWith("event", "test_event", { key: "value" });
+    expect(gtagMock).toHaveBeenCalledWith("event", "test_event", {
+      key: "value",
+    });
 
     vi.unstubAllGlobals();
   });
@@ -24,9 +26,12 @@ describe("googleAnalytics", () => {
     vi.stubGlobal("window", { gtag: gtagMock });
 
     const plugin = googleAnalytics({ measurementId: "G-TEST" });
-    plugin.identify!("user-123", { email: "a@b.com" });
+    plugin.identify?.("user-123", { email: "a@b.com" });
 
-    expect(gtagMock).toHaveBeenCalledWith("set", { user_id: "user-123", email: "a@b.com" });
+    expect(gtagMock).toHaveBeenCalledWith("set", {
+      user_id: "user-123",
+      email: "a@b.com",
+    });
 
     vi.unstubAllGlobals();
   });
@@ -43,11 +48,16 @@ describe("googleAnalytics", () => {
   it("uses provided client instead of window global", () => {
     const client = vi.fn();
 
-    const plugin = googleAnalytics({ measurementId: "G-TEST", client: client as never });
+    const plugin = googleAnalytics({
+      measurementId: "G-TEST",
+      client: client as never,
+    });
     plugin.track("test_event", { key: "value" });
-    plugin.identify!("user-123");
+    plugin.identify?.("user-123");
 
-    expect(client).toHaveBeenCalledWith("event", "test_event", { key: "value" });
+    expect(client).toHaveBeenCalledWith("event", "test_event", {
+      key: "value",
+    });
     expect(client).toHaveBeenCalledWith("set", { user_id: "user-123" });
   });
 });

@@ -1,6 +1,14 @@
 {
   "name": "@alyt/codegen",
   "version": "0.1.0",
+  "description": "YAML-to-TypeScript event codegen CLI for alyt",
+  "keywords": [
+    "codegen",
+    "yaml",
+    "typescript",
+    "cli",
+    "code-generation"
+  ],
   "type": "module",
   "exports": {
     ".": "./build/index.js"
@@ -13,17 +21,19 @@
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.lib.json --noEmit"
   },
+  "author": "Mathematic Inc",
+  "license": "Apache-2.0",
   "dependencies": {
     "yaml": "^2.8.2"
   },
   "devDependencies": {
-    "@types/node": "^25.3.2",
+    "@types/node": "^25.4.0",
     "typescript": "5.9.3",
     "vitest": "^4.0.18"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jrandolf/alyt.git",
+    "url": "https://github.com/mathematic-inc/alyt.git",
     "directory": "packages/codegen"
   }
 }
