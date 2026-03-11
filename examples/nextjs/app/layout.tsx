@@ -1,8 +1,12 @@
-import { AnalyticsProvider } from "@alyt/react";
 import { GAScript } from "@alyt/plugin-ga/react";
+import { AnalyticsProvider } from "@alyt/react";
 import { analytics } from "../lib/analytics";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body>

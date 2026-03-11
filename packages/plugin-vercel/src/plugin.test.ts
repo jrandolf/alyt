@@ -45,6 +45,8 @@ describe("vercelAnalytics", () => {
     plugin.track("test_event", { key: "value" });
 
     expect(client.track).toHaveBeenCalledWith("test_event", { key: "value" });
-    expect(vercelTrack).not.toHaveBeenCalledWith("test_event", { key: "value" });
+    expect(vercelTrack).not.toHaveBeenCalledWith("test_event", {
+      key: "value",
+    });
   });
 });

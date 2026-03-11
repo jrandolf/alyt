@@ -4,10 +4,17 @@ import { createContext, type ReactNode } from "react";
 export const AnalyticsContext = createContext<AnalyticsClient | null>(null);
 
 interface AnalyticsProviderProps {
-  client: AnalyticsClient;
   children: ReactNode;
+  client: AnalyticsClient;
 }
 
-export function AnalyticsProvider({ client, children }: AnalyticsProviderProps) {
-  return <AnalyticsContext.Provider value={client}>{children}</AnalyticsContext.Provider>;
+export function AnalyticsProvider({
+  client,
+  children,
+}: AnalyticsProviderProps) {
+  return (
+    <AnalyticsContext.Provider value={client}>
+      {children}
+    </AnalyticsContext.Provider>
+  );
 }

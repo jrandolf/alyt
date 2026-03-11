@@ -3,20 +3,10 @@
   "compilerOptions": {
     "outDir": "./build",
     "rootDir": "./src",
-    "lib": [
-      "ES2022",
-      "dom",
-      "dom.iterable"
-    ],
+    "lib": ["ES2024", "dom", "dom.iterable"],
     "jsx": "react-jsx",
     "strictNullChecks": true
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "build",
-    "**/*.test.ts",
-    "**/*.test.tsx"
-  ]
+  "include": ["src"],
+  "exclude": ["build", "**/*.test.ts", "**/*.test.tsx"]
 }

@@ -2,14 +2,16 @@ import type { AnalyticsPlugin } from "@alyt/core";
 import type { PostHog } from "posthog-js";
 
 export interface PostHogOptions {
-  apiKey: string;
   apiHost?: string;
+  apiKey: string;
   client?: PostHog;
 }
 
 export function posthog(options: PostHogOptions): AnalyticsPlugin {
   function getPostHog(): PostHog | null {
-    if (options.client) return options.client;
+    if (options.client) {
+      return options.client;
+    }
     if (typeof window !== "undefined" && "posthog" in window) {
       return (window as Record<string, unknown>).posthog as PostHog;
     }
