@@ -105,9 +105,7 @@ jobs:
         with:
           name: build-output
           path: ${{ needs.meta.outputs.package_path }}/build
-      - run: pnpm --filter "./${{ needs.meta.outputs.package_path }}" publish --access public --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: pnpm --filter "./${{ needs.meta.outputs.package_path }}" publish --access public --no-git-checks --provenance
 
   create-release:
     name: Create GitHub release
