@@ -304,4 +304,6 @@ Only `name` and `track` are required. The `identify`, `page`, and `reset` method
 
 ## License
 
-MIT
+Apache-2.0
+
+> This project is free and open-source work by a 501(c)(3) non-profit. If you find it useful, please consider [donating](https://github.com/sponsors/mathematic-inc).

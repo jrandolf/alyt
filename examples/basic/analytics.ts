@@ -19,7 +19,11 @@ analytics.identify("user_123", { plan: "pro", company: "Acme" });
 analytics.page("Home");
 
 // Send only to Google Analytics
-analytics.track("internal_metric", { value: 42 }, { only: ["google-analytics"] });
+analytics.track(
+  "internal_metric",
+  { value: 42 },
+  { only: ["google-analytics"] }
+);
 
 // Reset (e.g. on logout)
 analytics.reset();

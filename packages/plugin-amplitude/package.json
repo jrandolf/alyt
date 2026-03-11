@@ -1,6 +1,14 @@
 {
   "name": "@alyt/plugin-amplitude",
   "version": "0.1.0",
+  "description": "Amplitude plugin for alyt",
+  "keywords": [
+    "analytics",
+    "amplitude",
+    "typescript",
+    "plugin",
+    "event-tracking"
+  ],
   "type": "module",
   "exports": {
     ".": "./build/index.js",
@@ -30,8 +38,10 @@
       "optional": true
     }
   },
+  "author": "Mathematic Inc",
+  "license": "Apache-2.0",
   "devDependencies": {
-    "@amplitude/analytics-browser": "^2.35.4",
+    "@amplitude/analytics-browser": "^2.36.3",
     "@types/react": "19.2.14",
     "next": "16.1.6",
     "react": "19.2.4",
@@ -40,7 +50,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jrandolf/alyt.git",
+    "url": "https://github.com/mathematic-inc/alyt.git",
     "directory": "packages/plugin-amplitude"
   }
 }
