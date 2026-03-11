@@ -23,6 +23,7 @@ jobs:
       tag: ${{ steps.parse.outputs.tag }}
       is_prerelease: ${{ steps.parse.outputs.is_prerelease }}
       package_path: ${{ steps.parse.outputs.package_path }}
+      package_name: ${{ steps.parse.outputs.package_name }}
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - id: parse
@@ -50,9 +51,12 @@ jobs:
             exit 1
           fi
 
+          PKG_NAME="$(node -p "require('./$PACKAGE_PATH/package.json').name")"
+
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "package_path=$PACKAGE_PATH" >> "$GITHUB_OUTPUT"
+          echo "package_name=$PKG_NAME" >> "$GITHUB_OUTPUT"
           if [[ "$VERSION" == *-* ]]; then
             echo "is_prerelease=true" >> "$GITHUB_OUTPUT"
           else
@@ -71,8 +75,8 @@ jobs:
           node-version-file: .node-version
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm --filter "./${{ needs.meta.outputs.package_path }}..." run build
-      - run: pnpm --filter "./${{ needs.meta.outputs.package_path }}..." run test
+      - run: pnpm --filter "${{ needs.meta.outputs.package_name }}..." run build
+      - run: pnpm --filter "${{ needs.meta.outputs.package_name }}..." run test
       - name: Upload build output
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
