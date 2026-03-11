@@ -36,7 +36,7 @@ jobs:
           else
             COMPONENT="${TAG%-v*}"
             PACKAGE_PATH="packages/$COMPONENT"
-            VERSION="${TAG#*-v}"
+            VERSION="${TAG##*-v}"
           fi
 
           if [[ ! -f "$PACKAGE_PATH/package.json" ]]; then
