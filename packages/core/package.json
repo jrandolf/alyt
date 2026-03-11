@@ -1,6 +1,6 @@
 {
   "name": "@alyt/core",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "All-in-one Analytics SDK core client and plugin interface",
   "keywords": [
     "analytics",
