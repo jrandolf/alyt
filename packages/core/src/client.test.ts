@@ -31,7 +31,9 @@ describe("createAnalytics", () => {
 
     client.identify("user-123", { email: "a@b.com" });
 
-    expect(withIdentify.identify).toHaveBeenCalledWith("user-123", { email: "a@b.com" });
+    expect(withIdentify.identify).toHaveBeenCalledWith("user-123", {
+      email: "a@b.com",
+    });
   });
 
   it("fans out page calls", () => {

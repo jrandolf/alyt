@@ -28,7 +28,7 @@ describe("amplitude", () => {
     });
 
     const plugin = amplitude({ apiKey: "test-key" });
-    plugin.identify!("user-123");
+    plugin.identify?.("user-123");
 
     expect(setUserIdMock).toHaveBeenCalledWith("user-123");
 
@@ -42,7 +42,7 @@ describe("amplitude", () => {
     });
 
     const plugin = amplitude({ apiKey: "test-key" });
-    plugin.page!("Home", { url: "/home" });
+    plugin.page?.("Home", { url: "/home" });
 
     expect(trackMock).toHaveBeenCalledWith("Page View", {
       page_title: "Home",
@@ -57,9 +57,9 @@ describe("amplitude", () => {
 
     const plugin = amplitude({ apiKey: "test-key" });
     expect(() => plugin.track("event")).not.toThrow();
-    expect(() => plugin.identify!("user")).not.toThrow();
-    expect(() => plugin.page!("page")).not.toThrow();
-    expect(() => plugin.reset!()).not.toThrow();
+    expect(() => plugin.identify?.("user")).not.toThrow();
+    expect(() => plugin.page?.("page")).not.toThrow();
+    expect(() => plugin.reset?.()).not.toThrow();
 
     vi.unstubAllGlobals();
   });
@@ -73,8 +73,8 @@ describe("amplitude", () => {
 
     const plugin = amplitude({ apiKey: "test-key", client: client as never });
     plugin.track("test_event", { key: "value" });
-    plugin.identify!("user-123");
-    plugin.reset!();
+    plugin.identify?.("user-123");
+    plugin.reset?.();
 
     expect(client.track).toHaveBeenCalledWith("test_event", { key: "value" });
     expect(client.setUserId).toHaveBeenCalledWith("user-123");

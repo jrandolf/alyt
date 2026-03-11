@@ -1,13 +1,18 @@
 import type { AnalyticsPlugin } from "@alyt/core";
 
 export interface GoogleAnalyticsOptions {
-  measurementId: string;
   client?: Gtag.Gtag;
+  measurementId: string;
 }
 
-export function googleAnalytics(options: GoogleAnalyticsOptions): AnalyticsPlugin {
+export function googleAnalytics(
+  options: GoogleAnalyticsOptions
+): AnalyticsPlugin {
   function getGtag(): Gtag.Gtag | undefined {
-    return options.client ?? (typeof window !== "undefined" ? window.gtag : undefined);
+    return (
+      options.client ??
+      (typeof window !== "undefined" ? window.gtag : undefined)
+    );
   }
 
   return {
