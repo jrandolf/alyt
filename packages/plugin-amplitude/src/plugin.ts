@@ -8,7 +8,9 @@ export interface AmplitudeOptions {
 
 export function amplitude(options: AmplitudeOptions): AnalyticsPlugin {
   function getAmplitude(): AmplitudeBrowser | null {
-    if (options.client) return options.client;
+    if (options.client) {
+      return options.client;
+    }
     if (typeof window !== "undefined" && "amplitude" in window) {
       return (window as Record<string, unknown>).amplitude as AmplitudeBrowser;
     }

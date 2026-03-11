@@ -1,8 +1,8 @@
 import Script from "next/script";
 
 interface PlausibleScriptProps {
-  domain: string;
   apiHost?: string;
+  domain: string;
 }
 
 export function PlausibleScript({
@@ -11,8 +11,8 @@ export function PlausibleScript({
 }: PlausibleScriptProps) {
   return (
     <Script
-      defer
       data-domain={domain}
+      defer
       src={`${apiHost}/js/script.js`}
       strategy="afterInteractive"
     />
