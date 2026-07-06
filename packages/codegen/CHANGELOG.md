@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.4](https://github.com/mathematic-inc/alyt/compare/codegen-v0.1.3...codegen-v0.1.4) (2026-07-06)
+
+
+### Features
+
+* Add hashed analytics params ([a840162](https://github.com/mathematic-inc/alyt/commit/a8401629a58ea2fdd184ea4886b2c6b1cb001702))
+
 ## [0.1.3](https://github.com/mathematic-inc/alyt/compare/codegen-v0.1.2...codegen-v0.1.3) (2026-07-06)
 
 
