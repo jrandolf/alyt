@@ -149,6 +149,19 @@ events:
 
 Events with no parameters can omit `params`. The optional `description` field generates JSDoc comments in the output.
 
+Parameters support a short form (`name: type`) and a full form for metadata:
+
+```yaml
+events:
+  magic_link_requested:
+    params:
+      email:
+        type: string
+        hash: true
+```
+
+`hash: true` is only valid for `type: string`. The generated tracker method still accepts the raw string argument, but emits the same parameter key with the exact input string replaced by a lowercase SHA-256 hex digest from `globalThis.crypto.subtle`. Alyt does not trim, lowercase, salt, or rename hashed values. Generated methods with hashed params are `async`; generated methods without hashed params remain synchronous.
+
 ### 2. Run the CLI
 
 ```bash
