@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/mathematic-inc/alyt/compare/codegen-v0.1.2...codegen-v0.1.3) (2026-07-06)
+
+
+### Bug Fixes
+
+* **codegen:** Support dotted event namespaces ([b6d0c7c](https://github.com/mathematic-inc/alyt/commit/b6d0c7c4be81e5681d86da5c43b6cdd99adcbace))
+
 ## [0.1.2](https://github.com/mathematic-inc/alyt/compare/codegen-v0.1.1...codegen-v0.1.2) (2026-03-11)
 
 
