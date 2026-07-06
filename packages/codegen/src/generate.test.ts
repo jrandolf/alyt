@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import * as ts from "typescript";
 import { generateTracker, generateTypes } from "./generate.js";
+import type { Schema } from "./generate.js";
 
 const schema = {
   events: {
@@ -13,6 +14,18 @@ const schema = {
     onboarding_dismissed: { description: "Fired when the user dismisses onboarding" },
   },
 };
+
+const hashSchema = {
+  events: {
+    user_invited: {
+      description: "Fired when an invitation is sent",
+      params: {
+        email: { type: "string", hash: true },
+        organization_id: "string",
+      },
+    },
+  },
+} satisfies Schema;
 
 function expectValidTypeScript(source: string): void {
   const result = ts.transpileModule(source, {
@@ -43,6 +56,11 @@ describe("generateTypes", () => {
     expect(output).toContain("onboarding_dismissed: Record<string, never>");
   });
 
+  it("generates AnalyticsEventMap from full-form param types", () => {
+    const output = generateTypes(hashSchema);
+    expect(output).toContain("user_invited: { email: string; organization_id: string }");
+  });
+
   it("generates JSDoc comments for events with descriptions", () => {
     const output = generateTypes(schema);
     expect(output).toContain("/** Fired when a new scenario is created */");
@@ -59,6 +77,10 @@ describe("generateTypes", () => {
   it("generates valid TypeScript for dotted event names", () => {
     expectValidTypeScript(generateTypes(schema));
   });
+
+  it("generates valid TypeScript for full-form params", () => {
+    expectValidTypeScript(generateTypes(hashSchema));
+  });
 });
 
 describe("generateTracker", () => {
@@ -66,6 +88,7 @@ describe("generateTracker", () => {
     const output = generateTracker(schema);
     expect(output).toContain("export function createTracker(client: AnalyticsClient)");
     expect(output).toContain('import type { AnalyticsClient, TrackOptions } from "@alyt/core"');
+    expect(output).not.toContain("sha256Hex");
   });
 
   it("generates methods with correct parameter names and TrackOptions", () => {
@@ -93,6 +116,15 @@ describe("generateTracker", () => {
     expect(output).toContain('client.track("onboarding_dismissed", undefined, options)');
   });
 
+  it("hashes full-form params marked with hash metadata", () => {
+    const output = generateTracker(hashSchema);
+    expect(output).toContain('import { sha256Hex } from "@alyt/core"');
+    expect(output).toContain("async userInvited(email: string, organizationId: string, options?: TrackOptions)");
+    expect(output).toContain(
+      'client.track("user_invited", { email: await sha256Hex(email), organization_id: organizationId }, options)',
+    );
+  });
+
   it("generates JSDoc comments for methods with descriptions", () => {
     const output = generateTracker(schema);
     expect(output).toContain("/** Fired when a new scenario is created */");
@@ -108,5 +140,57 @@ describe("generateTracker", () => {
 
   it("generates valid TypeScript for dotted event names", () => {
     expectValidTypeScript(generateTracker(schema));
+  });
+
+  it("generates valid TypeScript for full-form params", () => {
+    expectValidTypeScript(generateTracker(hashSchema));
+  });
+
+  it("throws when hash metadata is used on non-string params", () => {
+    const invalidSchema = {
+      events: {
+        bad_event: {
+          params: {
+            count: { type: "number", hash: true },
+          },
+        },
+      },
+    } as unknown as Schema;
+
+    expect(() => generateTracker(invalidSchema)).toThrow(
+      'Param "count" on event "bad_event" uses hash: true, which is only supported for type "string"',
+    );
+  });
+
+  it("throws when full-form params omit type", () => {
+    const invalidSchema = {
+      events: {
+        bad_event: {
+          params: {
+            email: { hash: true },
+          },
+        },
+      },
+    } as unknown as Schema;
+
+    expect(() => generateTypes(invalidSchema)).toThrow(
+      'Param "email" on event "bad_event" must define a string type field',
+    );
+  });
+
+  it("throws when full-form params include unknown fields", () => {
+    const invalidSchema = {
+      events: {
+        bad_event: {
+          params: {
+            email: { type: "string", transform: "hash" },
+          },
+        },
+      },
+    } as unknown as Schema;
+
+    expect(() => generateTracker(invalidSchema)).toThrow(
+      'Param "email" on event "bad_event" has unknown field(s): transform',
+    );
   });
 });
