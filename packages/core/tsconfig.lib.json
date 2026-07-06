@@ -3,6 +3,7 @@
   "compilerOptions": {
     "outDir": "./build",
     "rootDir": "./src",
+    "lib": ["ES2024", "dom", "dom.iterable"],
     "strictNullChecks": true
   },
   "include": ["src"],

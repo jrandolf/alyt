@@ -1,6 +1,13 @@
+export interface SchemaParamDefinition {
+  hash?: boolean;
+  type: string;
+}
+
+export type SchemaParam = SchemaParamDefinition | string;
+
 export interface SchemaEvent {
   description?: string;
-  params?: Record<string, string>;
+  params?: Record<string, SchemaParam>;
 }
 
 export interface Schema {
@@ -21,6 +28,13 @@ interface TrackerNamespace {
 type TrackerEntry = TrackerMethod | TrackerNamespace;
 
 const identifierPattern = /^[A-Za-z_$][\w$]*$/;
+const paramDefinitionFields = new Set(["hash", "type"]);
+
+interface NormalizedParam {
+  hash: boolean;
+  name: string;
+  type: string;
+}
 
 function propertyKey(s: string): string {
   return identifierPattern.test(s) ? s : JSON.stringify(s);
@@ -38,6 +52,63 @@ function nameToCamel(s: string): string {
   const pascal = nameToPascal(s);
   const camel = pascal.charAt(0).toLowerCase() + pascal.slice(1);
   return identifierPattern.test(camel) ? camel : `_${camel}`;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function normalizeParam(eventName: string, paramName: string, param: SchemaParam): NormalizedParam {
+  if (typeof param === "string") {
+    return {
+      hash: false,
+      name: paramName,
+      type: param,
+    };
+  }
+
+  if (!isRecord(param)) {
+    throw new Error(
+      `Param "${paramName}" on event "${eventName}" must be a type string or a full-form param object`,
+    );
+  }
+
+  const unknownFields = Object.keys(param).filter((field) => !paramDefinitionFields.has(field));
+  if (unknownFields.length > 0) {
+    throw new Error(
+      `Param "${paramName}" on event "${eventName}" has unknown field(s): ${unknownFields.join(", ")}`,
+    );
+  }
+
+  if (typeof param.type !== "string" || param.type.length === 0) {
+    throw new Error(`Param "${paramName}" on event "${eventName}" must define a string type field`);
+  }
+
+  if (param.hash !== undefined && typeof param.hash !== "boolean") {
+    throw new Error(`Param "${paramName}" on event "${eventName}" has non-boolean hash metadata`);
+  }
+
+  if (param.hash === true && param.type !== "string") {
+    throw new Error(
+      `Param "${paramName}" on event "${eventName}" uses hash: true, which is only supported for type "string"`,
+    );
+  }
+
+  return {
+    hash: param.hash ?? false,
+    name: paramName,
+    type: param.type,
+  };
+}
+
+function normalizeParams(eventName: string, params?: Record<string, SchemaParam>): NormalizedParam[] {
+  return Object.entries(params ?? {}).map(([name, param]) => normalizeParam(eventName, name, param));
+}
+
+function schemaUsesHash(schema: Schema): boolean {
+  return Object.entries(schema.events).some(([name, event]) =>
+    normalizeParams(name, event?.params).some((param) => param.hash),
+  );
 }
 
 function trackerPath(name: string): string[] {
@@ -92,16 +163,22 @@ function insertTrackerEvent(root: TrackerNamespace, name: string, event: SchemaE
 
 function emitTrackerMethod(lines: string[], key: string, method: TrackerMethod, level: number): void {
   const indent = "\t".repeat(level);
-  const params = method.event?.params;
+  const params = normalizeParams(method.name, method.event?.params);
+  const usesHash = params.some((param) => param.hash);
 
   if (method.event?.description) {
     lines.push(`${indent}/** ${method.event.description} */`);
   }
-  if (params && Object.keys(params).length > 0) {
-    const paramEntries = Object.entries(params);
-    const args = paramEntries.map(([k, v]) => `${nameToCamel(k)}: ${v}`).join(", ");
-    const obj = paramEntries.map(([k]) => `${propertyKey(k)}: ${nameToCamel(k)}`).join(", ");
-    lines.push(`${indent}${propertyKey(key)}(${args}, options?: TrackOptions) {`);
+  if (params.length > 0) {
+    const args = params.map((param) => `${nameToCamel(param.name)}: ${param.type}`).join(", ");
+    const obj = params
+      .map((param) => {
+        const argumentName = nameToCamel(param.name);
+        const value = param.hash ? `await sha256Hex(${argumentName})` : argumentName;
+        return `${propertyKey(param.name)}: ${value}`;
+      })
+      .join(", ");
+    lines.push(`${indent}${usesHash ? "async " : ""}${propertyKey(key)}(${args}, options?: TrackOptions) {`);
     lines.push(`${indent}\tclient.track("${method.name}", { ${obj} }, options);`);
     lines.push(`${indent}},`);
   } else {
@@ -138,10 +215,10 @@ export function generateTypes(schema: Schema): string {
     if (def?.description) {
       lines.push(`\t/** ${def.description} */`);
     }
-    const params = def?.params;
-    if (params && Object.keys(params).length > 0) {
-      const fields = Object.entries(params)
-        .map(([k, v]) => `${propertyKey(k)}: ${v}`)
+    const params = normalizeParams(name, def?.params);
+    if (params.length > 0) {
+      const fields = params
+        .map((param) => `${propertyKey(param.name)}: ${param.type}`)
         .join("; ");
       lines.push(`\t${propertyKey(name)}: { ${fields} };`);
     } else {
@@ -155,6 +232,7 @@ export function generateTypes(schema: Schema): string {
 }
 
 export function generateTracker(schema: Schema): string {
+  const usesHash = schemaUsesHash(schema);
   const root = createTrackerNamespace();
   for (const [name, def] of Object.entries(schema.events)) {
     insertTrackerEvent(root, name, def);
@@ -162,6 +240,7 @@ export function generateTracker(schema: Schema): string {
 
   const lines: string[] = [
     "// @generated by @alyt/codegen — do not edit manually",
+    ...(usesHash ? ['import { sha256Hex } from "@alyt/core";'] : []),
     'import type { AnalyticsClient, TrackOptions } from "@alyt/core";',
     "",
     "export function createTracker(client: AnalyticsClient) {",
