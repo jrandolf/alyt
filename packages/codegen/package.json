@@ -1,6 +1,6 @@
 {
   "name": "@alyt/codegen",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "YAML-to-TypeScript event codegen CLI for alyt",
   "keywords": [
     "codegen",
