@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.1.5](https://github.com/mathematic-inc/alyt/compare/codegen-v0.1.4...codegen-v0.1.5) (2026-08-23)
+
+
+### Features
+
+* Add hashed analytics params ([38fe716](https://github.com/mathematic-inc/alyt/commit/38fe716e7393ac4cacc456c5b3365b83bc405f71))
+* Add README, usage examples, and schema description support ([a6042a6](https://github.com/mathematic-inc/alyt/commit/a6042a66085c3aedef93f0001fe38e91a0703096))
+* Initial commit ([685371d](https://github.com/mathematic-inc/alyt/commit/685371d1fb6fbac1bc34d2b294a4a613b7da71d4))
+* Transfer repo to mathematic-inc, adopt Apache-2.0, and improve release pipeline ([#2](https://github.com/mathematic-inc/alyt/issues/2)) ([d3cbe9c](https://github.com/mathematic-inc/alyt/commit/d3cbe9c215ce35bc756700d1e7f4253a0c4b687e))
+
+
+### Bug Fixes
+
+* **codegen:** Support dotted event namespaces ([557e568](https://github.com/mathematic-inc/alyt/commit/557e56886f30a775853797cf91acfd5089c224cc))
+* Use turbo for build orchestration instead of tsc project references ([d01dcca](https://github.com/mathematic-inc/alyt/commit/d01dcca4a9fb1c5f6da39a8dd8cbea8510c51b67))
+
 ## [0.1.4](https://github.com/mathematic-inc/alyt/compare/codegen-v0.1.3...codegen-v0.1.4) (2026-07-06)
 
 

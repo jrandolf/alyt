@@ -1,6 +1,6 @@
 {
   "name": "@alyt/plugin-ga",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Google Analytics (gtag.js) plugin for alyt",
   "keywords": [
     "analytics",
