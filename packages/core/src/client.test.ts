@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+
 import { createAnalytics } from "./client.js";
 import type { AnalyticsPlugin } from "./types.js";
 

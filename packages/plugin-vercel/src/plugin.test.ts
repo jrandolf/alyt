@@ -1,11 +1,11 @@
+import { track as vercelTrack } from "@vercel/analytics";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+
+import { vercelAnalytics } from "./plugin.js";
 
 vi.mock("@vercel/analytics", () => ({
   track: vi.fn(),
 }));
-
-import { track as vercelTrack } from "@vercel/analytics";
-import { vercelAnalytics } from "./plugin.js";
 
 describe("vercelAnalytics", () => {
   beforeEach(() => {

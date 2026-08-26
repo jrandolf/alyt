@@ -9,6 +9,13 @@
     "plugin",
     "event-tracking"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mathematic-inc/alyt.git",
+    "directory": "packages/plugin-vercel"
+  },
+  "license": "Apache-2.0",
+  "author": "Mathematic Inc",
   "type": "module",
   "exports": {
     ".": "./build/index.js",
@@ -17,11 +24,17 @@
   "scripts": {
     "build": "tsc -p tsconfig.lib.json",
     "test": "vitest run",
-    "typecheck": "tsc -p tsconfig.lib.json --noEmit"
+    "typecheck": "tsc -b --noEmit"
   },
   "dependencies": {
     "@alyt/core": "workspace:*",
-    "@vercel/analytics": "^2.0.0"
+    "@vercel/analytics": "^2.0.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.18",
+    "react": "19.2.8",
+    "typescript": "7.0.2",
+    "vitest": "^4.1.11"
   },
   "peerDependencies": {
     "react": ">=18"
@@ -30,18 +43,5 @@
     "react": {
       "optional": true
     }
-  },
-  "author": "Mathematic Inc",
-  "license": "Apache-2.0",
-  "devDependencies": {
-    "@types/react": "19.2.14",
-    "react": "19.2.4",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.18"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mathematic-inc/alyt.git",
-    "directory": "packages/plugin-vercel"
   }
 }

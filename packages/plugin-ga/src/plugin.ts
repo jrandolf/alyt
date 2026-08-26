@@ -5,14 +5,9 @@ export interface GoogleAnalyticsOptions {
   measurementId: string;
 }
 
-export function googleAnalytics(
-  options: GoogleAnalyticsOptions
-): AnalyticsPlugin {
+export function googleAnalytics(options: GoogleAnalyticsOptions): AnalyticsPlugin {
   function getGtag(): Gtag.Gtag | undefined {
-    return (
-      options.client ??
-      (typeof window !== "undefined" ? window.gtag : undefined)
-    );
+    return options.client ?? (typeof window === "undefined" ? undefined : window.gtag);
   }
 
   return {

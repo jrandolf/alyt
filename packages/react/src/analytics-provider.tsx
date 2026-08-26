@@ -8,13 +8,6 @@ interface AnalyticsProviderProps {
   client: AnalyticsClient;
 }
 
-export function AnalyticsProvider({
-  client,
-  children,
-}: AnalyticsProviderProps) {
-  return (
-    <AnalyticsContext.Provider value={client}>
-      {children}
-    </AnalyticsContext.Provider>
-  );
+export function AnalyticsProvider({ client, children }: AnalyticsProviderProps) {
+  return <AnalyticsContext.Provider value={client}>{children}</AnalyticsContext.Provider>;
 }

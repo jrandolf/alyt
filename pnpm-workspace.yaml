@@ -1,14 +1,10 @@
 packages:
   - packages/*
 
-onlyBuiltDependencies:
-  - "@biomejs/biome"
-  - core-js
-  - esbuild
-  - lefthook
-  - protobufjs
+autoInstallPeers: false
 
-catalog:
-  "@biomejs/biome": ^2.4.6
-  lefthook: ^2.1.3
-  ultracite: ^7.2.5
+overrides:
+  vite: 8.2.2
+
+allowBuilds:
+  core-js: false

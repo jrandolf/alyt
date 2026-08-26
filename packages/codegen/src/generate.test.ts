@@ -1,5 +1,11 @@
+import { execFileSync } from "node:child_process";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { createRequire } from "node:module";
+import { tmpdir } from "node:os";
+import { dirname, join } from "node:path";
+
 import { describe, expect, it } from "vitest";
-import * as ts from "typescript";
+
 import { generateTracker, generateTypes } from "./generate.js";
 import type { Schema } from "./generate.js";
 
@@ -9,7 +15,10 @@ const schema = {
       description: "Fired when a magic link is requested",
       params: { "user.email_hash": "string" },
     },
-    scenario_created: { description: "Fired when a new scenario is created", params: { scenario_id: "string" } },
+    scenario_created: {
+      description: "Fired when a new scenario is created",
+      params: { scenario_id: "string" },
+    },
     interview_created: { params: { interview_id: "string", scenario_id: "string" } },
     onboarding_dismissed: { description: "Fired when the user dismisses onboarding" },
   },
@@ -27,15 +36,23 @@ const hashSchema = {
   },
 } satisfies Schema;
 
-function expectValidTypeScript(source: string): void {
-  const result = ts.transpileModule(source, {
-    compilerOptions: {
-      module: ts.ModuleKind.ESNext,
-    },
-    reportDiagnostics: true,
-  });
+const require = createRequire(import.meta.url);
+const tscPath = join(dirname(require.resolve("typescript/package.json")), "bin", "tsc");
 
-  expect(result.diagnostics).toEqual([]);
+function expectValidTypeScript(source: string): void {
+  const directory = mkdtempSync(join(tmpdir(), "alyt-codegen-"));
+  const file = join(directory, "generated.ts");
+
+  try {
+    writeFileSync(file, source);
+    execFileSync(
+      process.execPath,
+      [tscPath, "--ignoreConfig", "--noEmit", "--noCheck", "--module", "ESNext", file],
+      { stdio: "inherit" },
+    );
+  } finally {
+    rmSync(directory, { force: true, recursive: true });
+  }
 }
 
 describe("generateTypes", () => {
@@ -95,7 +112,9 @@ describe("generateTracker", () => {
     const output = generateTracker(schema);
     expect(output).toContain("requested(userEmailHash: string, options?: TrackOptions)");
     expect(output).toContain("scenarioCreated(scenarioId: string, options?: TrackOptions)");
-    expect(output).toContain("interviewCreated(interviewId: string, scenarioId: string, options?: TrackOptions)");
+    expect(output).toContain(
+      "interviewCreated(interviewId: string, scenarioId: string, options?: TrackOptions)",
+    );
     expect(output).toContain("onboardingDismissed(options?: TrackOptions)");
   });
 
@@ -112,14 +131,18 @@ describe("generateTracker", () => {
     expect(output).toContain(
       'client.track("auth.magic_link.requested", { "user.email_hash": userEmailHash }, options)',
     );
-    expect(output).toContain('client.track("scenario_created", { scenario_id: scenarioId }, options)');
+    expect(output).toContain(
+      'client.track("scenario_created", { scenario_id: scenarioId }, options)',
+    );
     expect(output).toContain('client.track("onboarding_dismissed", undefined, options)');
   });
 
   it("hashes full-form params marked with hash metadata", () => {
     const output = generateTracker(hashSchema);
     expect(output).toContain('import { sha256Hex } from "@alyt/core"');
-    expect(output).toContain("async userInvited(email: string, organizationId: string, options?: TrackOptions)");
+    expect(output).toContain(
+      "async userInvited(email: string, organizationId: string, options?: TrackOptions)",
+    );
     expect(output).toContain(
       'client.track("user_invited", { email: await sha256Hex(email), organization_id: organizationId }, options)',
     );

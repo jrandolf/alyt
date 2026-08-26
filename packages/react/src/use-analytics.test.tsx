@@ -2,6 +2,7 @@ import { createAnalytics } from "@alyt/core";
 import { renderHook } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { describe, expect, it } from "vitest";
+
 import { AnalyticsProvider } from "./analytics-provider.js";
 import { useAnalytics } from "./use-analytics.js";
 

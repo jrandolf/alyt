@@ -9,6 +9,13 @@
     "plugin",
     "event-tracking"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mathematic-inc/alyt.git",
+    "directory": "packages/plugin-amplitude"
+  },
+  "license": "Apache-2.0",
+  "author": "Mathematic Inc",
   "type": "module",
   "exports": {
     ".": "./build/index.js",
@@ -17,10 +24,19 @@
   "scripts": {
     "build": "tsc -p tsconfig.lib.json",
     "test": "vitest run",
-    "typecheck": "tsc -p tsconfig.lib.json --noEmit"
+    "typecheck": "tsc -b --noEmit"
   },
   "dependencies": {
     "@alyt/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@amplitude/analytics-browser": "^2.45.7",
+    "@types/react": "19.2.18",
+    "next": "16.3.3",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "typescript": "7.0.2",
+    "vitest": "^4.1.11"
   },
   "peerDependencies": {
     "@amplitude/analytics-browser": ">=2",
@@ -37,20 +53,5 @@
     "react": {
       "optional": true
     }
-  },
-  "author": "Mathematic Inc",
-  "license": "Apache-2.0",
-  "devDependencies": {
-    "@amplitude/analytics-browser": "^2.36.3",
-    "@types/react": "19.2.14",
-    "next": "16.1.6",
-    "react": "19.2.4",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.18"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mathematic-inc/alyt.git",
-    "directory": "packages/plugin-amplitude"
   }
 }

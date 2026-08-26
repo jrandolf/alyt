@@ -16,11 +16,7 @@ export interface AnalyticsClient {
   page(name?: string, params?: Record<string, unknown>): void;
   removePlugin(name: string): void;
   reset(): void;
-  track(
-    event: string,
-    params?: Record<string, unknown>,
-    options?: TrackOptions
-  ): void;
+  track(event: string, params?: Record<string, unknown>, options?: TrackOptions): void;
 }
 
 export interface AnalyticsOptions {

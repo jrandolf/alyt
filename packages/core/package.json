@@ -9,6 +9,13 @@
     "plugin-system",
     "typed-events"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mathematic-inc/alyt.git",
+    "directory": "packages/core"
+  },
+  "license": "Apache-2.0",
+  "author": "Mathematic Inc",
   "type": "module",
   "exports": {
     ".": "./build/index.js"
@@ -16,17 +23,10 @@
   "scripts": {
     "build": "tsc -p tsconfig.lib.json",
     "test": "vitest run",
-    "typecheck": "tsc -p tsconfig.lib.json --noEmit"
+    "typecheck": "tsc -b --noEmit"
   },
-  "author": "Mathematic Inc",
-  "license": "Apache-2.0",
   "devDependencies": {
-    "typescript": "5.9.3",
-    "vitest": "^4.0.18"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mathematic-inc/alyt.git",
-    "directory": "packages/core"
+    "typescript": "7.0.2",
+    "vitest": "^4.1.11"
   }
 }
