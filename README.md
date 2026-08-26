@@ -315,6 +315,12 @@ Only `name` and `track` are required. The `identify`, `page`, and `reset` method
 | [`@alyt/plugin-plausible`](packages/plugin-plausible) | Plausible Analytics |
 | [`@alyt/plugin-vercel`](packages/plugin-vercel) | Vercel Analytics |
 
+## Contributing
+
+Start a [GitHub Discussion](../../discussions/new) with your proposal and wait for a Mathematic maintainer to review it. If we decide to implement the change, a maintainer or agent will open the pull request.
+
+Only Mathematic organization members, repository collaborators, and the approved maintenance bots `dependabot[bot]` and `renovate[bot]` may open pull requests. Pull requests from outside contributors close automatically. Read [CONTRIBUTING.md](CONTRIBUTING.md) for the full process.
+
 ## License
 
 Apache-2.0
