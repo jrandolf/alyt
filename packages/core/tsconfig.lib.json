@@ -1,10 +1,12 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "composite": true,
     "outDir": "./build",
     "rootDir": "./src",
-    "lib": ["ES2024", "dom", "dom.iterable"],
-    "strictNullChecks": true
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "tsBuildInfoFile": "./build/tsconfig.lib.tsbuildinfo",
+    "types": []
   },
   "include": ["src"],
   "exclude": ["build", "**/*.test.ts"]

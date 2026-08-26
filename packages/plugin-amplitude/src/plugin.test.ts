@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+
 import { amplitude } from "./plugin.js";
 
 describe("amplitude", () => {

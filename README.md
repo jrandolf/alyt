@@ -2,7 +2,11 @@
 
 All-in-one Analytics SDK.
 
-Define your analytics events in a YAML schema and get a fully typed TypeScript tracker — no more typos in event names or missing properties. alyt sends events to Google Analytics, PostHog, Mixpanel, Amplitude, Plausible, and Vercel Analytics through a single API, and lets you add or remove providers at runtime for consent flows.
+Define your analytics events in a YAML schema and get a fully typed TypeScript
+tracker without typos in event names or missing properties. alyt sends events
+to Google Analytics, PostHog, Mixpanel, Amplitude, Plausible, and Vercel
+Analytics through one API. You can add or remove providers at runtime for
+consent flows.
 
 ## Install
 
@@ -44,7 +48,8 @@ analytics.identify("user_123", { plan: "pro" });
 analytics.page("Home");
 ```
 
-Every call fans out to all registered plugins. Plugins that don't implement a method (e.g. Plausible has no `identify`) are silently skipped.
+Every call fans out to all registered plugins. alyt skips plugins that don't
+implement a method, such as Plausible's missing `identify` method.
 
 ## Plugins
 
@@ -57,7 +62,8 @@ Every call fans out to all registered plugins. Plugins that don't implement a me
 | Plausible | `@alyt/plugin-plausible` | `plausible()` | `domain: string` |
 | Vercel Analytics | `@alyt/plugin-vercel` | `vercelAnalytics()` | _(none)_ |
 
-Each plugin also accepts an optional `client` property to inject an SDK instance (useful for testing or SSR).
+Each plugin also accepts an optional `client` property to inject an SDK
+instance. This is useful for testing and server-side rendering.
 
 ### Script Loaders (React / Next.js)
 
@@ -67,7 +73,11 @@ Plugins that need a `<script>` tag provide a React component under a `/react` su
 import { GAScript } from "@alyt/plugin-ga/react";
 import { VercelAnalytics } from "@alyt/plugin-vercel/react";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html>
       <body>
@@ -147,7 +157,8 @@ events:
     description: Fired when a new user completes registration
 ```
 
-Events with no parameters can omit `params`. The optional `description` field generates JSDoc comments in the output.
+Events with no parameters can omit `params`. The optional `description` field
+generates JSDoc comments in the output.
 
 Parameters support a short form (`name: type`) and a full form for metadata:
 
@@ -160,7 +171,12 @@ events:
         hash: true
 ```
 
-`hash: true` is only valid for `type: string`. The generated tracker method still accepts the raw string argument, but emits the same parameter key with the exact input string replaced by a lowercase SHA-256 hex digest from `globalThis.crypto.subtle`. Alyt does not trim, lowercase, salt, or rename hashed values. Generated methods with hashed params are `async`; generated methods without hashed params remain synchronous.
+`hash: true` is only valid for `type: string`. The generated tracker method
+still accepts the raw string argument, but emits the same parameter key with the
+exact input string replaced by a lowercase SHA-256 hex digest from
+`globalThis.crypto.subtle`. Alyt does not trim, lowercase, salt, or rename
+hashed values. Generated methods with hashed parameters are `async`; generated
+methods without hashed parameters remain synchronous.
 
 ### 2. Run the CLI
 
@@ -172,7 +188,7 @@ npx alyt-codegen --schema analytics.schema.yaml --out lib/analytics
 
 The CLI generates two files:
 
-**`types.ts`** -- Event name union and parameter map:
+**`types.ts`** – Event name union and parameter map:
 
 ```typescript
 export type AnalyticsEventName =
@@ -190,7 +206,7 @@ export interface AnalyticsEventMap {
 }
 ```
 
-**`tracker.ts`** -- Typed methods that call `client.track()`:
+**`tracker.ts`** – Typed methods that call `client.track()`:
 
 ```typescript
 import type { AnalyticsClient, TrackOptions } from "@alyt/core";
@@ -213,7 +229,9 @@ export function createTracker(client: AnalyticsClient) {
 }
 ```
 
-Parameter names are converted from `snake_case` (YAML) to `camelCase` (TypeScript). Descriptions become JSDoc comments on both the type map and the tracker methods.
+Parameter names are converted from `snake_case` (YAML) to `camelCase`
+(TypeScript). Descriptions become JSDoc comments on both the type map and the
+tracker methods.
 
 ## Selective Tracking
 
@@ -235,11 +253,13 @@ Plugin names are the `name` property returned by each factory:
 | `plausible()` | `"plausible"` |
 | `vercelAnalytics()` | `"vercel"` |
 
-The generated tracker also accepts `TrackOptions` as the last argument on every method.
+The generated tracker also accepts `TrackOptions` as the last argument on every
+method.
 
 ## Custom Client
 
-Every plugin accepts a `client` option to pass your own SDK instance. This is useful when you've already initialized the SDK elsewhere, or for testing:
+Every plugin accepts a `client` option to pass your own SDK instance. Use this
+when you've already initialized the SDK elsewhere or when testing:
 
 ```typescript
 import { googleAnalytics } from "@alyt/plugin-ga";
@@ -253,7 +273,7 @@ const plugin = googleAnalytics({
 
 ## Dynamic Plugins
 
-Add or remove plugins at runtime -- useful for cookie consent flows:
+Add or remove plugins at runtime – useful for cookie consent flows:
 
 ```typescript
 import { createAnalytics } from "@alyt/core";
@@ -299,7 +319,8 @@ export function consoleAnalytics(): AnalyticsPlugin {
 }
 ```
 
-Only `name` and `track` are required. The `identify`, `page`, and `reset` methods are optional.
+Only `name` and `track` are required. The `identify`, `page`, and `reset`
+methods are optional.
 
 ## Packages
 
@@ -317,14 +338,24 @@ Only `name` and `track` are required. The `identify`, `page`, and `reset` method
 
 ## Contributing
 
-Start a [GitHub Discussion](../../discussions/new) with your proposal and wait for a Mathematic maintainer to review it. If we decide to implement the change, a maintainer or agent will open the pull request.
+Start a [GitHub Discussion] with your proposal and wait for a Mathematic
+maintainer to review it. If we decide to implement the change, a maintainer or
+agent will open the pull request.
 
-When Mathematic implements a proposal, it will link the implementation pull request to the Discussion and credit the proposal's original author.
+When Mathematic implements a proposal, it will link the implementation pull
+request to the Discussion and credit the proposal's original author.
 
-GitHub restricts pull request creation to Mathematic maintainers and repository collaborators with write, maintain, or admin access, plus authorized maintenance agents. Read [CONTRIBUTING.md](CONTRIBUTING.md) for the full process.
+GitHub restricts pull request creation to Mathematic maintainers, repository
+collaborators with write, maintain, or admin access, and authorized maintenance
+agents. Read [CONTRIBUTING.md] for the full process.
+
+[GitHub Discussion]: https://github.com/mathematic-inc/alyt/discussions/new
+[CONTRIBUTING.md]: CONTRIBUTING.md
 
 ## License
 
 Apache-2.0
 
-> This project is free and open-source work by a 501(c)(3) non-profit. If you find it useful, please consider [donating](https://github.com/sponsors/mathematic-inc).
+> This project is free and open-source work by a 501(c)(3) non-profit. If you
+> find it useful, please consider
+> [donating](https://github.com/sponsors/mathematic-inc).

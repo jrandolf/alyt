@@ -1,4 +1,4 @@
-# alyt -- Pluggable Analytics Library
+# alyt – Pluggable Analytics Library
 
 Extracted from `@rcruit/analytics`. A standalone monorepo at `~/Sources/alyt` published to npm under the `@alyt` scope.
 
@@ -18,7 +18,7 @@ Extracted from `@rcruit/analytics`. A standalone monorepo at `~/Sources/alyt` pu
 
 ## Repo Structure
 
-```
+```text
 ~/Sources/alyt/
   packages/
     core/
@@ -72,8 +72,8 @@ function createAnalytics(options: {
 
 Reads a YAML schema (same format as existing `analytics.schema.yaml`) and generates:
 
-1. `types.ts` -- `AnalyticsEventName` union + `AnalyticsEventMap` interface
-2. `tracker.ts` -- `createTracker(client)` curried factory returning a typed object
+1. `types.ts` – `AnalyticsEventName` union + `AnalyticsEventMap` interface
+2. `tracker.ts` – `createTracker(client)` curried factory returning a typed object
 
 ```ts
 // Generated output
@@ -110,8 +110,8 @@ tracker.scenarioCreated("abc");
 
 ## React (`@alyt/react`)
 
-- `<AnalyticsProvider client={...}>` -- context provider
-- `useAnalytics()` -- hook returning `AnalyticsClient`
+- `<AnalyticsProvider client={...}>` – context provider
+- `useAnalytics()` – hook returning `AnalyticsClient`
 
 Thin package. Script loaders live in their respective plugin packages.
 
@@ -119,8 +119,8 @@ Thin package. Script loaders live in their respective plugin packages.
 
 Each plugin package has two entrypoints:
 
-- `@alyt/plugin-ga` -- pure JS plugin factory `googleAnalytics()`
-- `@alyt/plugin-ga/react` -- React script loader `<GAScript>`
+- `@alyt/plugin-ga` – pure JS plugin factory `googleAnalytics()`
+- `@alyt/plugin-ga/react` – React script loader `<GAScript>`
 
 ## Plugin SDK Mapping
 

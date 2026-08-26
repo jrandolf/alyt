@@ -12,22 +12,24 @@
     "type": "git",
     "url": "https://github.com/mathematic-inc/alyt.git"
   },
-  "author": "Mathematic Inc",
   "license": "Apache-2.0",
-  "packageManager": "pnpm@10.31.0+sha512.e3927388bfaa8078ceb79b748ffc1e8274e84d75163e67bc22e06c0d3aed43dd153151cbf11d7f8301ff4acb98c68bdc5cadf6989532801ffafe3b3e4a63c268",
+  "author": "Mathematic Inc",
   "scripts": {
+    "audit": "pnpm audit --audit-level high",
     "build": "turbo run build",
+    "check": "oxlint --deny-warnings . && oxfmt --check .",
+    "fix": "oxlint --fix --deny-warnings . && oxfmt --write .",
+    "format": "oxfmt --write .",
+    "lint": "oxlint --deny-warnings .",
+    "prepare": "node -e \"const { spawnSync } = require('node:child_process'); const options = { shell: process.platform === 'win32', stdio: 'ignore' }; if (spawnSync('hk', ['--version'], options).status === 0) process.exit(spawnSync('hk', ['install'], { ...options, stdio: 'inherit' }).status ?? 1)\"",
     "test": "turbo run test",
-    "typecheck": "turbo run typecheck",
-    "lint": "ultracite check",
-    "format": "ultracite fix",
-    "prepare": "test -n \"$CI\" || lefthook install"
+    "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
-    "@biomejs/biome": "catalog:",
-    "lefthook": "catalog:",
-    "turbo": "^2.8.16",
-    "typescript": "^5.9.3",
-    "ultracite": "catalog:"
-  }
+    "@types/node": "^26.3.0",
+    "turbo": "^2.10.12",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.2"
+  },
+  "packageManager": "pnpm@11.24.0+sha512.bd27e345e976dcb0be0b7a1228217b049a817e21b1f355c90dbe7dc46671895a8bc1e6d06c24554505ea93ea0b45f489a27ec1bfbc8de6a9659fca0f16fa0000"
 }

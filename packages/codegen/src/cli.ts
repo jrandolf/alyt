@@ -1,7 +1,9 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { parseArgs } from "node:util";
+
 import { parse } from "yaml";
+
 import { generateTracker, generateTypes } from "./generate.js";
 import type { Schema } from "./generate.js";
 

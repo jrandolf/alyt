@@ -27,7 +27,7 @@ interface TrackerNamespace {
 
 type TrackerEntry = TrackerMethod | TrackerNamespace;
 
-const identifierPattern = /^[A-Za-z_$][\w$]*$/;
+const identifierPattern = /^[A-Za-z_$][\w$]*$/u;
 const paramDefinitionFields = new Set(["hash", "type"]);
 
 interface NormalizedParam {
@@ -42,7 +42,7 @@ function propertyKey(s: string): string {
 
 function nameToPascal(s: string): string {
   return s
-    .split(/[^A-Za-z0-9_$]+|_/)
+    .split(/[^A-Za-z0-9_$]+|_/u)
     .filter(Boolean)
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
     .join("");
@@ -101,8 +101,13 @@ function normalizeParam(eventName: string, paramName: string, param: SchemaParam
   };
 }
 
-function normalizeParams(eventName: string, params?: Record<string, SchemaParam>): NormalizedParam[] {
-  return Object.entries(params ?? {}).map(([name, param]) => normalizeParam(eventName, name, param));
+function normalizeParams(
+  eventName: string,
+  params?: Record<string, SchemaParam>,
+): NormalizedParam[] {
+  return Object.entries(params ?? {}).map(([name, param]) =>
+    normalizeParam(eventName, name, param),
+  );
 }
 
 function schemaUsesHash(schema: Schema): boolean {
@@ -161,7 +166,12 @@ function insertTrackerEvent(root: TrackerNamespace, name: string, event: SchemaE
   }
 }
 
-function emitTrackerMethod(lines: string[], key: string, method: TrackerMethod, level: number): void {
+function emitTrackerMethod(
+  lines: string[],
+  key: string,
+  method: TrackerMethod,
+  level: number,
+): void {
   const indent = "\t".repeat(level);
   const params = normalizeParams(method.name, method.event?.params);
   const usesHash = params.some((param) => param.hash);
@@ -178,13 +188,17 @@ function emitTrackerMethod(lines: string[], key: string, method: TrackerMethod, 
         return `${propertyKey(param.name)}: ${value}`;
       })
       .join(", ");
-    lines.push(`${indent}${usesHash ? "async " : ""}${propertyKey(key)}(${args}, options?: TrackOptions) {`);
-    lines.push(`${indent}\tclient.track("${method.name}", { ${obj} }, options);`);
-    lines.push(`${indent}},`);
+    lines.push(
+      `${indent}${usesHash ? "async " : ""}${propertyKey(key)}(${args}, options?: TrackOptions) {`,
+      `${indent}\tclient.track("${method.name}", { ${obj} }, options);`,
+      `${indent}},`,
+    );
   } else {
-    lines.push(`${indent}${propertyKey(key)}(options?: TrackOptions) {`);
-    lines.push(`${indent}\tclient.track("${method.name}", undefined, options);`);
-    lines.push(`${indent}},`);
+    lines.push(
+      `${indent}${propertyKey(key)}(options?: TrackOptions) {`,
+      `${indent}\tclient.track("${method.name}", undefined, options);`,
+      `${indent}},`,
+    );
   }
 }
 
@@ -208,25 +222,22 @@ export function generateTypes(schema: Schema): string {
 
   lines.push(
     `export type AnalyticsEventName =\n\t| ${eventNames.map((n) => `"${n}"`).join("\n\t| ")};`,
+    "",
+    "export interface AnalyticsEventMap {",
   );
-  lines.push("");
-  lines.push("export interface AnalyticsEventMap {");
   for (const [name, def] of Object.entries(schema.events)) {
     if (def?.description) {
       lines.push(`\t/** ${def.description} */`);
     }
     const params = normalizeParams(name, def?.params);
     if (params.length > 0) {
-      const fields = params
-        .map((param) => `${propertyKey(param.name)}: ${param.type}`)
-        .join("; ");
+      const fields = params.map((param) => `${propertyKey(param.name)}: ${param.type}`).join("; ");
       lines.push(`\t${propertyKey(name)}: { ${fields} };`);
     } else {
       lines.push(`\t${propertyKey(name)}: Record<string, never>;`);
     }
   }
-  lines.push("}");
-  lines.push("");
+  lines.push("}", "");
 
   return lines.join("\n");
 }
@@ -251,9 +262,7 @@ export function generateTracker(schema: Schema): string {
     emitTrackerEntry(lines, key, entry, 2);
   }
 
-  lines.push("\t};");
-  lines.push("}");
-  lines.push("");
+  lines.push("\t};", "}", "");
 
   return lines.join("\n");
 }

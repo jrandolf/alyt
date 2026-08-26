@@ -1,9 +1,11 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "composite": true,
     "outDir": "./build",
     "rootDir": "./src",
-    "strictNullChecks": true
+    "tsBuildInfoFile": "./build/tsconfig.lib.tsbuildinfo",
+    "types": ["node"]
   },
   "include": ["src"],
   "exclude": ["build", "**/*.test.ts"]

@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+
 import { mixpanel } from "./plugin.js";
 
 describe("mixpanel", () => {

@@ -1,8 +1,4 @@
-import type {
-  AnalyticsClient,
-  AnalyticsOptions,
-  AnalyticsPlugin,
-} from "./types.js";
+import type { AnalyticsClient, AnalyticsOptions, AnalyticsPlugin } from "./types.js";
 
 export function createAnalytics(options?: AnalyticsOptions): AnalyticsClient {
   const plugins: AnalyticsPlugin[] = [...(options?.plugins ?? [])];

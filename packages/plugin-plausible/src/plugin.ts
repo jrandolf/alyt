@@ -2,7 +2,7 @@ import type { AnalyticsPlugin } from "@alyt/core";
 
 export type PlausibleClient = (
   event: string,
-  options?: { props?: Record<string, unknown> }
+  options?: { props?: Record<string, unknown> },
 ) => void;
 
 export interface PlausibleOptions {

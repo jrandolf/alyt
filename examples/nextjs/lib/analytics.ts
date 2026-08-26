@@ -1,5 +1,6 @@
 import { createAnalytics } from "@alyt/core";
 import { googleAnalytics } from "@alyt/plugin-ga";
+
 import { createTracker } from "./generated/tracker";
 
 export const analytics = createAnalytics({
