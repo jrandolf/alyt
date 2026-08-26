@@ -319,6 +319,8 @@ Only `name` and `track` are required. The `identify`, `page`, and `reset` method
 
 Start a [GitHub Discussion](../../discussions/new) with your proposal and wait for a Mathematic maintainer to review it. If we decide to implement the change, a maintainer or agent will open the pull request.
 
+When Mathematic implements a proposal, it will link the implementation pull request to the Discussion and credit the proposal's original author.
+
 GitHub restricts pull request creation to Mathematic maintainers and repository collaborators with write, maintain, or admin access, plus authorized maintenance agents. Read [CONTRIBUTING.md](CONTRIBUTING.md) for the full process.
 
 ## License
