@@ -319,7 +319,7 @@ Only `name` and `track` are required. The `identify`, `page`, and `reset` method
 
 Start a [GitHub Discussion](../../discussions/new) with your proposal and wait for a Mathematic maintainer to review it. If we decide to implement the change, a maintainer or agent will open the pull request.
 
-Only Mathematic organization members, repository collaborators, and the approved maintenance bots `dependabot[bot]` and `renovate[bot]` may open pull requests. Pull requests from outside contributors close automatically. Read [CONTRIBUTING.md](CONTRIBUTING.md) for the full process.
+GitHub restricts pull request creation to Mathematic maintainers and repository collaborators with write, maintain, or admin access, plus authorized maintenance agents. Read [CONTRIBUTING.md](CONTRIBUTING.md) for the full process.
 
 ## License
 
