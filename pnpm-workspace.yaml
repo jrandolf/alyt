@@ -8,3 +8,8 @@ overrides:
 
 allowBuilds:
   core-js: false
+
+minimumReleaseAgeExclude:
+  - "@posthog/types@1.407.0"
+  - "@types/node@26.4.0"
+  - posthog-js@1.421.0
