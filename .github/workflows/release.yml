@@ -136,9 +136,3 @@ jobs:
           generate_release_notes: true
           prerelease: ${{ needs.meta.outputs.is_prerelease == 'true' }}
           make_latest: ${{ needs.meta.outputs.is_prerelease == 'false' && startsWith(github.ref_name, 'v') }}
-      - name: Trigger release notes workflow
-        env:
-          GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-        run: |
-          gh workflow run release-notes.yml \
-            --field tag="${{ needs.meta.outputs.tag }}"
