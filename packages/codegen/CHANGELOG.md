@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.5](https://github.com/mathematic-inc/alyt/compare/codegen-v0.1.4...codegen-v0.1.5) (2026-08-27)
+
+
+### Bug Fixes
+
+* **codegen:** Declare Node engine floor ([2a98f8c](https://github.com/mathematic-inc/alyt/commit/2a98f8c06260ef18f0c27e857e910911a1248852))
+
 ## [0.1.4](https://github.com/mathematic-inc/alyt/compare/codegen-v0.1.3...codegen-v0.1.4) (2026-07-06)
 
 ### Features
