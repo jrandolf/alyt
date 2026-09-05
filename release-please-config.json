@@ -11,6 +11,9 @@
     "packages/react": {
       "release-type": "node"
     },
+    "packages/svelte": {
+      "release-type": "node"
+    },
     "packages/codegen": {
       "release-type": "node"
     },

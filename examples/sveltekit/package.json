@@ -1,0 +1,26 @@
+{
+  "name": "@alyt/example-sveltekit",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite dev",
+    "generate": "alyt-codegen --schema analytics.schema.yaml --out src/lib/generated",
+    "preview": "vite preview",
+    "typecheck": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --fail-on-warnings"
+  },
+  "dependencies": {
+    "@alyt/core": "workspace:*",
+    "@alyt/svelte": "workspace:*"
+  },
+  "devDependencies": {
+    "@alyt/codegen": "workspace:*",
+    "@sveltejs/adapter-auto": "^7.0.1",
+    "@sveltejs/kit": "^2.70.3",
+    "@sveltejs/vite-plugin-svelte": "^7.3.0",
+    "svelte": "^5.57.0",
+    "svelte-check": "^4.7.6",
+    "typescript": "6.0.3",
+    "vite": "^8.2.2"
+  }
+}
