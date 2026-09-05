@@ -28,7 +28,7 @@
   "types": "./build/index.d.ts",
   "files": [
     "build",
-    "!build/**/*.test.*"
+    "!build/**/*.test*"
   ],
   "scripts": {
     "build": "svelte-package -i src -o build",
