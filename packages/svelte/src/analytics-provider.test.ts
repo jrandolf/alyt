@@ -3,9 +3,9 @@ import { flushSync, mount, unmount } from "svelte";
 import { fromStore, writable } from "svelte/store";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { createTracker } from "../../../examples/sveltekit/src/lib/generated/tracker.js";
 import Consumer from "./consumer.test.svelte";
 import ProviderTree from "./provider-tree.test.svelte";
+import { createTracker } from "./tracker.test-fixture.js";
 
 const mounted: ReturnType<typeof mount>[] = [];
 
