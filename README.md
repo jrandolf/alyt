@@ -25,6 +25,9 @@ pnpm add @alyt/plugin-vercel
 # react bindings
 pnpm add @alyt/react
 
+# svelte 5 bindings
+pnpm add @alyt/svelte
+
 # codegen (dev dependency)
 pnpm add -D @alyt/codegen
 ```
@@ -134,6 +137,27 @@ function Dashboard() {
 ```
 
 `useAnalytics()` throws if used outside an `<AnalyticsProvider>`.
+
+## Svelte 5 / SvelteKit
+
+Create a client inside your layout's instance script and provide it to the
+component tree with `AnalyticsProvider` from `@alyt/svelte`. Descendants call
+`getAnalytics()` during initialization to access the core client:
+
+```svelte
+<script lang="ts">
+  import { getAnalytics } from "@alyt/svelte";
+
+  const analytics = getAnalytics();
+</script>
+
+<button onclick={() => analytics.track("signup_clicked")}>Sign up</button>
+```
+
+The bindings support SSR, nested providers, existing generated trackers, and
+dynamic plugins. They do not emit automatic page views or GA4
+enhanced-measurement events. See the [Svelte setup and consent guide](packages/svelte/README.md)
+and the [runnable SvelteKit example](examples/sveltekit).
 
 ## Codegen
 
@@ -328,6 +352,7 @@ methods are optional.
 | --- | --- |
 | [`@alyt/core`](packages/core) | `createAnalytics` client and plugin interface |
 | [`@alyt/react`](packages/react) | `AnalyticsProvider` and `useAnalytics` hook |
+| [`@alyt/svelte`](packages/svelte) | Svelte 5 `AnalyticsProvider` and analytics context |
 | [`@alyt/codegen`](packages/codegen) | YAML-to-TypeScript event codegen CLI |
 | [`@alyt/plugin-ga`](packages/plugin-ga) | Google Analytics (gtag.js) |
 | [`@alyt/plugin-posthog`](packages/plugin-posthog) | PostHog |

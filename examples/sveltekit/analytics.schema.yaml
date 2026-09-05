@@ -1,0 +1,5 @@
+events:
+  signup_clicked:
+    description: Fired when a visitor chooses to sign up
+    params:
+      source: string

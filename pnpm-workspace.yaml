@@ -1,10 +1,17 @@
 packages:
   - packages/*
+  - examples/sveltekit
 
 autoInstallPeers: false
 
+packageExtensions:
+  "@sveltejs/package@2.5.8":
+    peerDependencies:
+      typescript: "^5.0.0 || ^6.0.0"
+
 overrides:
   vite: 8.2.2
+  "@sveltejs/kit>cookie": ^0.7.2
 
 allowBuilds:
   core-js: false
