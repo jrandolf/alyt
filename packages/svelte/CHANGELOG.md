@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/mathematic-inc/alyt/compare/svelte-v0.1.0...svelte-v0.1.1) (2026-09-05)
+
+
+### Bug Fixes
+
+* **svelte:** Isolate release tests from the example build ([#30](https://github.com/mathematic-inc/alyt/issues/30)) ([dbb119b](https://github.com/mathematic-inc/alyt/commit/dbb119ba0de8207abe28c6e49f23ea460efbfe7e))
+
 ## 0.1.0 (2026-09-05)
 
 

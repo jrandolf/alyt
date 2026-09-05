@@ -1,6 +1,6 @@
 {
   "name": "@alyt/svelte",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Svelte 5 bindings for alyt — AnalyticsProvider and analytics context",
   "keywords": [
     "analytics",
